@@ -19,7 +19,7 @@ export const Login: NextPage<LoginProps> = ({setToken}) => {
     const [showModal, setShowModal] = useState(false);
     const [name, setNameModal] = useState('');
     const [email, setEmailModal] = useState('');
-    // const [password, setPasswordModal] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
     const [errorMsgModal, setErrorMsgModal] = useState('');
 
     const closeModal = () => {
@@ -36,6 +36,9 @@ export const Login: NextPage<LoginProps> = ({setToken}) => {
             setErrorMsgModal('');
             if (!name || !email || !password) {
                 return setErrorMsgModal('Favor preencher os campos');
+            }
+            if(password != passwordConfirm){
+                return setErrorMsgModal('Senhas diferentes!');
             }
 
             setLoading(true);
@@ -67,7 +70,7 @@ export const Login: NextPage<LoginProps> = ({setToken}) => {
             if (!login || !password) {
                 return setErrorMsg('Favor preencher os campos');
             }
-
+            
             setLoading(true);
 
             const body = {
@@ -127,12 +130,14 @@ export const Login: NextPage<LoginProps> = ({setToken}) => {
                 <Modal.Body>
                         <p>Cadastro de usuário</p>
                         {errorMsgModal && <p className="error">{errorMsgModal}</p>}
-                        <input type="text" placeholder="Nome"
+                        <input type="text" placeholder="Digite o Nome"
                             value={name} onChange={e => setNameModal(e.target.value)}/>
-                        <input type="text" placeholder="Email"
+                        <input type="text" placeholder="Digite o Email"
                             value={email} onChange={e => setEmailModal(e.target.value)}/>
-                        <input type="password" placeholder="Senha"
+                        <input type="password" placeholder="Digite a senha"
                             value={password} onChange={e => setPassword(e.target.value)}/>
+                            <input type="password" placeholder="Confirme a senha"
+                            value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)}/>
                 </Modal.Body>
                 <Modal.Footer>
                     <div className="button col-12">
